@@ -1,4 +1,4 @@
-package util.paging;
+package paging;
 
 /**
  * Created by Jeff_xu on 26/02/2019.

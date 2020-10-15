@@ -1,4 +1,4 @@
-package util.springcontextholder;
+package springcontextholder;
 
 import java.util.ArrayList;
 import java.util.List;

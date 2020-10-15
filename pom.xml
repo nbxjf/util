@@ -6,7 +6,14 @@
 
     <groupId>com.jeff</groupId>
     <artifactId>util</artifactId>
+    <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
+    <modules>
+        <module>javabasis</module>
+        <module>interview</module>
+        <module>juc</module>
+        <module>commonutil</module>
+    </modules>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>

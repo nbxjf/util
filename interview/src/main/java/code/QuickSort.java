@@ -1,4 +1,4 @@
-package guide.code;
+package code;
 
 /**
  * Created by Jeff_xu on 06/03/2019.

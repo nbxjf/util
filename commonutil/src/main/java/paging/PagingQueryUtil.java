@@ -1,4 +1,4 @@
-package util.paging;
+package paging;
 
 import java.io.Serializable;
 import java.util.List;
