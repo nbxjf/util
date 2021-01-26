@@ -13,6 +13,8 @@
         <module>interview</module>
         <module>juc</module>
         <module>commonutil</module>
+        <module>netty</module>
+        <module>zookeeper</module>
     </modules>
     <dependencies>
         <dependency>
