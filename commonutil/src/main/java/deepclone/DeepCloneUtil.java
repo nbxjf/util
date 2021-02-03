@@ -1,6 +1,7 @@
 package deepclone;
 
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -89,7 +90,8 @@ public class DeepCloneUtil {
             Integer.class.equals(clazz) || int.class.equals(clazz) ||
             Long.class.equals(clazz) || long.class.equals(clazz) ||
             Short.class.equals(clazz) || short.class.equals(clazz) ||
-            String.class.equals(clazz) || Date.class.equals(clazz);
+            String.class.equals(clazz) || Date.class.equals(clazz) ||
+            BigDecimal.class.equals(clazz);
     }
 
     private static BeanCopier createCopier(Class<?> clz) {
@@ -99,5 +101,9 @@ public class DeepCloneUtil {
         BeanCopier beanCopier = BeanCopier.create(clz, clz, true);
         beanCopiesMap.putIfAbsent(clz, beanCopier);
         return beanCopier;
+    }
+
+    public static void main(String[] args) {
+        boolean a = false;
     }
 }

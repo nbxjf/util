@@ -29,4 +29,12 @@ public class QuickSort {
         }
         return arr;
     }
+
+    public static void main(String[] args) {
+        QuickSort quickSort = new QuickSort();
+        int[] ints = quickSort.quickSort(new int[] {4, 1, 5, 3, 7, 6, 2}, 0, 6);
+        for (int anInt : ints) {
+            System.out.println(anInt);
+        }
+    }
 }
