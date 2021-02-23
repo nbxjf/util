@@ -26,7 +26,9 @@ public class DeepCloneUtil {
 
     /**
      * Deep clone
-     * 使用限制：使用实体BeanCopier进行赋值，要求实体必须有getter(),setter()方法
+     * <p>
+     * 使用限制：
+     * <b color="red">使用实体BeanCopier进行赋值，要求实体必须有getter(),setter()方法！！！</b>
      *
      * @param source 需要克隆的实体
      * @param <T>    type

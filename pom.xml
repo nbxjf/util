@@ -16,6 +16,7 @@
         <module>netty</module>
         <module>zookeeper</module>
         <module>mybatis</module>
+        <module>kafka</module>
     </modules>
     <dependencies>
         <dependency>
