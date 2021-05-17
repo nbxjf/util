@@ -25,20 +25,34 @@ package leetcode.editor.cn;
 // Related Topics 数组 
 // 👍 112 👎 0
 
+class LongestContinuousIncreasingSubsequence {
+    public static void main(String[] args) {
+        Solution solution = new LongestContinuousIncreasingSubsequence().new Solution();
 
-class LongestContinuousIncreasingSubsequence{
-	public static void main(String[] args) {
-		Solution solution = new LongestContinuousIncreasingSubsequence().new Solution();
-		
-	}
-	
-//leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int findLengthOfLCIS(int[] nums) {
-		return 1;
     }
-}
-//leetcode submit region end(Prohibit modification and deletion)
 
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public int findLengthOfLCIS(int[] nums) {
+            if (nums == null || nums.length == 0) {
+                return 0;
+            }
+            if (nums.length == 1) {
+                return 1;
+            }
+            int max = 1;
+            int series = 1;
+            for (int i = 1; i < nums.length; i++) {
+                if (nums[i] > nums[i - 1]) {
+                    series++;
+                    max = Math.max(series, max);
+                } else {
+                    series = 1;
+                }
+            }
+            return max;
+        }
+    }
+    //leetcode submit region end(Prohibit modification and deletion)
 
 }
