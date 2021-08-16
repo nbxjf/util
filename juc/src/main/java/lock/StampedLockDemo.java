@@ -1,4 +1,4 @@
-package util;
+package lock;
 
 import java.util.concurrent.locks.StampedLock;
 

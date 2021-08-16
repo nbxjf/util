@@ -17,6 +17,7 @@
         <module>zookeeper</module>
         <module>mybatis</module>
         <module>kafka</module>
+        <module>redis</module>
     </modules>
     <dependencies>
         <dependency>
