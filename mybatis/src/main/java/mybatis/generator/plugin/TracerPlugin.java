@@ -16,7 +16,7 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 /**
- * @author guankaiqiang-pro
+ * @author Jeff_xu
  * @date 2021/1/14
  */
 public class TracerPlugin extends PluginAdapter {
@@ -40,7 +40,7 @@ public class TracerPlugin extends PluginAdapter {
 
     private void generateDiffClass(TopLevelClass topLevelClass, List<IntrospectedColumn> introspectedColumns, IntrospectedTable introspectedTable) {
         topLevelClass.addImportedType("java.util.Objects");
-        topLevelClass.addImportedType("com.yit.common.ddd.seedwork.ISnapshotTracing");
+        topLevelClass.addImportedType("ISnapshotTracing");
 
         // getChangeInfo
         Method compareMethod = new Method("getChangeInfo");
@@ -73,7 +73,7 @@ public class TracerPlugin extends PluginAdapter {
         diffClass.setVisibility(JavaVisibility.PUBLIC);
         diffClass.setStatic(false);
 
-        FullyQualifiedJavaType diffInterface = new FullyQualifiedJavaType("com.yit.common.ddd.seedwork.ISnapshotTracing");
+        FullyQualifiedJavaType diffInterface = new FullyQualifiedJavaType("ISnapshotTracing");
         diffInterface.addTypeArgument(topLevelClass.getType());
         diffInterface.addTypeArgument(topLevelClass.getType());
         diffClass.addSuperInterface(diffInterface);
