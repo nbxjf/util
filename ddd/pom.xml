@@ -84,6 +84,12 @@
             <artifactId>commonutil</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.jeff</groupId>
+            <artifactId>kafka</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

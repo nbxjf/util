@@ -13,6 +13,7 @@ import org.apache.commons.collections.MapUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.GenericTypeResolver;
+import message.KafkaJsonMessageService;
 
 /**
  * 当出现subscriber exceptions, 将领域事件转化为消息, 进行重试
@@ -54,7 +55,7 @@ public class DomainEventTransformToMessageHandler implements ApplicationListener
     public void handleException(Throwable exception, SubscriberExceptionContext context) {
         Object event = context.getEvent();
         if (event instanceof IDomainEvent) {
-            IDomainEvent domainEvent = (IDomainEvent)event;
+            IDomainEvent domainEvent = (IDomainEvent) event;
             //3s后重试
             this.kafkaJsonMessageService.enqueue(this.retryQueueName, domainEvent, 3);
         }
@@ -67,20 +68,20 @@ public class DomainEventTransformToMessageHandler implements ApplicationListener
             return;
         }
         this.domainEventHandlerMap = domainEventHandlerMap.values().stream()
-            .map(iDomainEventHandler -> (IDomainEventHandler<IDomainEvent>)iDomainEventHandler)
-            .collect(Collectors
-                .groupingBy(iDomainEventHandler -> GenericTypeResolver.resolveTypeArgument(iDomainEventHandler.getClass(), IDomainEventHandler.class),
-                    Collectors.toList()));
+                .map(iDomainEventHandler -> (IDomainEventHandler<IDomainEvent>) iDomainEventHandler)
+                .collect(Collectors
+                        .groupingBy(iDomainEventHandler -> GenericTypeResolver.resolveTypeArgument(iDomainEventHandler.getClass(), IDomainEventHandler.class),
+                                Collectors.toList()));
         //事件消息监听
-        this.kafkaJsonMessageService.listen(this.retryQueueName, this.groupName, this.retryThreadCount, IDomainEvent.class, (domainEvent) -> {
-            List<IDomainEventHandler<IDomainEvent>> domainEventHandlers = this.domainEventHandlerMap.get(domainEvent.getClass());
-            if (CollectionUtils.isEmpty(domainEventHandlers)) {
-                log.error("can not find any domainEventHandler for event:{}", domainEvent);
-            } else {
-                for (IDomainEventHandler<IDomainEvent> domainEventHandler : domainEventHandlers) {
-                    domainEventHandler.handleDomainEvent(domainEvent);
-                }
-            }
-        });
+//        this.kafkaJsonMessageService.listen(this.retryQueueName, this.groupName, this.retryThreadCount, IDomainEvent.class, (domainEvent) -> {
+//            List<IDomainEventHandler<IDomainEvent>> domainEventHandlers = this.domainEventHandlerMap.get(domainEvent.getClass());
+//            if (CollectionUtils.isEmpty(domainEventHandlers)) {
+//                log.error("can not find any domainEventHandler for event:{}", domainEvent);
+//            } else {
+//                for (IDomainEventHandler<IDomainEvent> domainEventHandler : domainEventHandlers) {
+//                    domainEventHandler.handleDomainEvent(domainEvent);
+//                }
+//            }
+//        });
     }
 }
