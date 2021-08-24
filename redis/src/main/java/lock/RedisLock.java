@@ -1,5 +1,7 @@
 package lock;
 
+import lombok.NonNull;
+
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -16,7 +18,7 @@ public interface RedisLock extends Lock {
     boolean tryLock();
 
     @Override
-    boolean tryLock(long time, TimeUnit unit) throws InterruptedException;
+    boolean tryLock(long time, @NonNull TimeUnit unit) throws InterruptedException;
 
     @Override
     void unlock();
