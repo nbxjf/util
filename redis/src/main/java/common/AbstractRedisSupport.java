@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-public abstract class AbstractRedisSupport<K, V> {
+abstract class AbstractRedisSupport<K, V> {
 
     private static final Pattern KEY_PATTERN = Pattern.compile("[a-zA-Z_0-9\\.\\-:]+(/[a-zA-Z_0-9\\.\\-:]+)*");
 

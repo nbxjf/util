@@ -1,4 +1,4 @@
-package persistent;
+package common;
 
 public class RedisSet {
 }

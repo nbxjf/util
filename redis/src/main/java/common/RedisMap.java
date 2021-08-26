@@ -1,9 +1,5 @@
-package persistent;
+package common;
 
-import common.AbstractRedisSupport;
-import common.FastJsonSerializableValueType;
-import common.RedisKeyType;
-import common.RedisValueType;
 import pool.RedisConfig;
 import pool.RedisPool;
 import redis.clients.jedis.Jedis;
