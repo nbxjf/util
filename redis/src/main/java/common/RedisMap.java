@@ -213,18 +213,4 @@ public class RedisMap<K, V> extends AbstractRedisSupport<K, V> {
             }
         }
     }
-
-    public static void main(String[] args) {
-        RedisConfig redisConfig = new RedisConfig();
-        redisConfig.setHost("127.0.0.1");
-        redisConfig.setDatabase(4);
-        redisConfig.setPassword("54xujifa");
-        RedisPool redisPool = new RedisPool(redisConfig);
-
-        RedisMap<String, String> map = new RedisMap<>(redisPool, "test", RedisKeyType.normal(), new FastJsonSerializableValueType<>(String.class));
-        map.set("xujifa", "1995");
-
-        String xujifa = map.get("xujifa");
-        System.out.println(xujifa);
-    }
 }
