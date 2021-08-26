@@ -3,7 +3,7 @@ package paging;
 import java.io.Serializable;
 import java.util.List;
 
-import common.Func2;
+import common.Func1;
 import common.PageParameter;
 
 /**
@@ -23,7 +23,7 @@ public class PagingQueryUtil {
      */
     public static <T extends PagingQueryFilterable & Serializable> PagingQueryResp<T> pagingQuery(
         PageParameter pageParameter,
-        Func2<List<T>, PageParameter> func) {
+        Func1<List<T>, PageParameter> func) {
         return pagingQuery(5, pageParameter, func);
     }
 
@@ -39,8 +39,8 @@ public class PagingQueryUtil {
     public static <T extends PagingQueryFilterable & Serializable> PagingQueryResp<T> pagingQuery(int bufferSize,
                                                                                                   PageParameter
                                                                                                       pageParameter,
-                                                                                                  Func2<List<T>,
-                                                                                                      PageParameter>
+                                                                                                  Func1<List<T>,
+                                                                                                                                                                                                        PageParameter>
                                                                                                       func) {
         int expectSize = pageParameter.limit;
         pageParameter.limit = pageParameter.limit + bufferSize;
@@ -61,8 +61,8 @@ public class PagingQueryUtil {
     private static <T extends PagingQueryFilterable & Serializable> PagingQueryResp<T> pagingQuery(int expectSize,
                                                                                                    PageParameter
                                                                                                        newPageParameter,
-                                                                                                   Func2<List<T>,
-                                                                                                       PageParameter>
+                                                                                                   Func1<List<T>,
+                                                                                                                                                                                                          PageParameter>
                                                                                                        func,
                                                                                                    PagingQueryResp<T>
                                                                                                        pagingQueryResp) {

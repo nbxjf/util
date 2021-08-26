@@ -22,7 +22,4 @@ public interface RedisLock extends Lock {
 
     @Override
     void unlock();
-
-    @Override
-    Condition newCondition();
 }
