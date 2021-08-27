@@ -27,7 +27,7 @@
 *.zip
 *.vi
 *~
-*.sass-cache
+*.sass-redis.cache
 *.ruby-version
 *.project
 
@@ -35,7 +35,7 @@
 .DS_Store
 ._*
 Thumbs.db
-.cache
+.redis.cache
 .tmproj
 *.esproj
 nbproject

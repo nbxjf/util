@@ -43,7 +43,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  *      <constructor-arg name="groupName" value="order"/>
  *      <constructor-arg name="retryThreadCount" value="5"/>
  * </bean>
- * <bean id="eventBus" class="com.google.common.eventbus.EventBus">
+ * <bean id="eventBus" class="com.google.redis.common.eventbus.EventBus">
  *      <constructor-arg name="exceptionHandler" ref="exceptionHandler"/>
  * </bean>
  * <bean id="domainEventBus" class="DomainEventBus">

@@ -224,7 +224,7 @@
 ### DTO差量更新
   ```java
         ExampleDTO exampleDTO = exampleDTOMapper.selectByPrimaryKey(id);
-        // 建立数据副本（com.yit.common.ddd.utils.DeepCloneUtil）
+        // 建立数据副本（com.yit.redis.common.ddd.utils.DeepCloneUtil）
         ExampleDTO source = DeepCloneUtil.clone(exampleDTO);
         // 修改exampleDTO
         exampleDTO.setColumn("change something");
