@@ -1,5 +1,7 @@
 package redis.common;
 
+import org.apache.commons.codec.binary.Hex;
+import redis.clients.jedis.util.SafeEncoder;
 import redis.pool.RedisPool;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.ScanParams;
@@ -8,6 +10,8 @@ import redis.clients.jedis.exceptions.JedisDataException;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -394,6 +398,34 @@ abstract class AbstractRedisSupport<K, V> {
                 throw (JedisDataException)o;
             }
         }
+    }
+
+    protected Object evalResult(Object result) {
+        if (result instanceof byte[]) {
+            return SafeEncoder.encode((byte[])result);
+        }
+
+        if (result instanceof List<?>) {
+            List<?> list = (List<?>)result;
+            List<Object> listResult = new ArrayList<Object>(list.size());
+            for (Object bin : list) {
+                listResult.add(evalResult(bin));
+            }
+
+            return listResult;
+        }
+
+        return result;
+    }
+
+    protected String scriptSha(String script) {
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("SHA-1");
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException(e);
+        }
+        return Hex.encodeHexString(md.digest(toBytes(script)));
     }
 
     private static byte[] keySpaceToKeyPrefix(String keySpace) {
