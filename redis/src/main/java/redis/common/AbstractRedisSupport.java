@@ -271,28 +271,28 @@ abstract class AbstractRedisSupport<K, V> {
         return result;
     }
 
-    protected ScanResult<Map.Entry<String, V>> returnEntryScanResult(ScanResult<Map.Entry<byte[], byte[]>> result) {
-        return new ScanResult<>(result.getCursorAsBytes(), returnEntries(result.getResult()));
-    }
-
-    protected List<Map.Entry<String, V>> returnEntries(List<Map.Entry<byte[], byte[]>> entries) {
-        return map(entries, entry -> new Map.Entry<String, V>() {
-            @Override
-            public String getKey() {
-                return AbstractRedisSupport.toString(entry.getKey());
-            }
-
-            @Override
-            public V getValue() {
-                return returnValue(entry.getValue());
-            }
-
-            @Override
-            public V setValue(V value) {
-                return null;
-            }
-        });
-    }
+    //protected ScanResult<Map.Entry<String, V>> returnEntryScanResult(ScanResult<Map.Entry<byte[], byte[]>> result) {
+    //    return new ScanResult<>(result.getCursorAsBytes(), returnEntries(result.getResult()));
+    //}
+    //
+    //protected List<Map.Entry<String, V>> returnEntries(List<Map.Entry<byte[], byte[]>> entries) {
+    //    return map(entries, entry -> new Map.Entry<String, V>() {
+    //        @Override
+    //        public String getKey() {
+    //            return AbstractRedisSupport.toString(entry.getKey());
+    //        }
+    //
+    //        @Override
+    //        public V getValue() {
+    //            return returnValue(entry.getValue());
+    //        }
+    //
+    //        @Override
+    //        public V setValue(V value) {
+    //            return null;
+    //        }
+    //    });
+    //}
 
     protected ScanResult<V> returnScanResult(ScanResult<byte[]> result) {
         return new ScanResult<>(result.getCursorAsBytes(), returnValues(result.getResult()));

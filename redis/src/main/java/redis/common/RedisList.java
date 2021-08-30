@@ -9,6 +9,7 @@ import redis.clients.jedis.ListPosition;
 import redis.clients.jedis.exceptions.JedisDataException;
 import redis.pool.RedisPool;
 
+@SuppressWarnings("unchecked")
 public class RedisList<K, V> extends AbstractRedisSupport<K, V> {
 
     private final K redisKey;
@@ -16,9 +17,8 @@ public class RedisList<K, V> extends AbstractRedisSupport<K, V> {
     public RedisList(K redisKey,
                      RedisPool redisPool,
                      String keySpace,
-                     RedisKeyType<K> redisKeyType,
                      RedisValueType<V> valueType) {
-        super(keySpace, redisKeyType, valueType, redisPool);
+        super(keySpace, new DefaultRedisKeyType<>((Class<K>)redisKey.getClass()), valueType, redisPool);
         this.redisKey = redisKey;
     }
 
