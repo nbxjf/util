@@ -26,12 +26,12 @@ public class RedisHash<K, F, V> extends AbstractRedisSupport<K, V> {
     private final byte[] hashName;
     private final RedisFieldType<F> fieldType;
 
-    public RedisHash(K redisKey,
-                     RedisPool redisPool,
-                     String keySpace,
+    public RedisHash(RedisPool redisPool,
+                     String hashPrefix,
+                     K redisKey,
                      RedisFieldType<F> fieldType,
                      RedisValueType<V> valueType) {
-        super(keySpace, new DefaultRedisKeyType<>((Class<K>)redisKey.getClass()), valueType, redisPool);
+        super(hashPrefix, new RedisKeyInstance<>((Class<K>)redisKey.getClass()), valueType, redisPool);
         this.hashName = finalKey(redisKey);
         this.fieldType = fieldType;
     }

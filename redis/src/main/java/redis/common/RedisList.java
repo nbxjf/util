@@ -14,11 +14,11 @@ public class RedisList<K, V> extends AbstractRedisSupport<K, V> {
 
     private final K redisKey;
 
-    public RedisList(K redisKey,
-                     RedisPool redisPool,
-                     String keySpace,
+    public RedisList(RedisPool redisPool,
+                     String listPrefix,
+                     K redisKey,
                      RedisValueType<V> valueType) {
-        super(keySpace, new DefaultRedisKeyType<>((Class<K>)redisKey.getClass()), valueType, redisPool);
+        super(listPrefix, new RedisKeyInstance<>((Class<K>)redisKey.getClass()), valueType, redisPool);
         this.redisKey = redisKey;
     }
 

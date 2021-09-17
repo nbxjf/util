@@ -11,11 +11,11 @@ public class RedisSet<K, V> extends AbstractRedisSupport<K, V> {
 
     private final K redisKey;
 
-    public RedisSet(K redisKey,
-                    RedisPool redisPool,
-                    String keySpace,
+    public RedisSet(RedisPool redisPool,
+                    String setPrefix,
+                    K redisKey,
                     RedisValueType<V> valueType) {
-        super(keySpace, new DefaultRedisKeyType<>((Class<K>)redisKey.getClass()), valueType, redisPool);
+        super(setPrefix, new RedisKeyInstance<>((Class<K>)redisKey.getClass()), valueType, redisPool);
         this.redisKey = redisKey;
     }
 

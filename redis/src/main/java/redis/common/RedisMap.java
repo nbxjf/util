@@ -13,6 +13,8 @@ import redis.pool.RedisPool;
 /**
  * 表示一张redis map
  * redis map表示对特定前缀的redis key进行操作的封装
+ * 可以将相同的前缀的key理解为一个hashmap
+ * 底层本质上就是redis的string的数据结构
  * <p>
  * 注意：由于redis本质上没有类型，所有外围类型是通过自动序列化和反序列化功能附加上的
  *
@@ -22,10 +24,10 @@ import redis.pool.RedisPool;
 public class RedisMap<K, V> extends AbstractRedisSupport<K, V> {
 
     public RedisMap(RedisPool redisPool,
-                    String keySpace,
+                    String mapName,
                     RedisKeyType<K> keyType,
                     RedisValueType<V> valueType) {
-        super(keySpace, keyType, valueType, redisPool);
+        super(mapName, keyType, valueType, redisPool);
     }
 
     /**
@@ -66,9 +68,9 @@ public class RedisMap<K, V> extends AbstractRedisSupport<K, V> {
      * @param key   要设置的key
      * @param value 要设置的值
      */
-    public String set(K key, V value) {
+    public void set(K key, V value) {
         try (Jedis jedis = redisPool.getJedisClient()) {
-            return jedis.set(finalKey(key), finalValue(value));
+            jedis.set(finalKey(key), finalValue(value));
         }
     }
 

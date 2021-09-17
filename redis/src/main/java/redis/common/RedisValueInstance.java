@@ -2,12 +2,12 @@ package redis.common;
 
 import utils.serializer.Serializer;
 
-public class DefaultRedisValueType<V> implements RedisValueType<V> {
+public class RedisValueInstance<V> implements RedisValueType<V> {
 
     private final Class<V> clazz;
     private final Serializer serializer;
 
-    public DefaultRedisValueType(Class<V> clazz, Serializer serializer) {
+    public RedisValueInstance(Class<V> clazz, Serializer serializer) {
         this.clazz = clazz;
         this.serializer = serializer;
     }

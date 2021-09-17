@@ -23,18 +23,16 @@ abstract class AbstractRedisSupport<K, V> {
     protected static Charset ENCODING = StandardCharsets.UTF_8;
 
     protected final byte[] keyPrefix;
-    protected final String keySpace;
     protected final RedisKeyType<K> keyType;
     protected final RedisValueType<V> valueType;
     protected final RedisPool redisPool;
 
     protected AbstractRedisSupport(byte[] keyPrefix,
-                                   String keySpace,
                                    RedisKeyType<K> keyType,
                                    RedisValueType<V> valueType,
                                    RedisPool redisPool) {
         this.keyPrefix = keyPrefix;
-        this.keySpace = keySpace;
+
         if (keyType == null) {
             throw new IllegalArgumentException("key type is not set");
         }
@@ -47,7 +45,7 @@ abstract class AbstractRedisSupport<K, V> {
     }
 
     protected AbstractRedisSupport(String keySpace, RedisKeyType<K> keyType, RedisValueType<V> valueType, RedisPool redisPool) {
-        this(keySpaceToKeyPrefix(keySpace), keySpace, keyType, valueType, redisPool);
+        this(keySpaceToKeyPrefix(keySpace), keyType, valueType, redisPool);
     }
 
     protected byte[] finalKey(K key) {

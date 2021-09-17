@@ -23,8 +23,6 @@ public class PersistentServiceTest extends BaseTest {
 
     @Test
     public void stringTest() {
-        final RedisMap<String, Student> map = persistentService.string("student", Student.class);
-        final Student xujifa = map.get("xujifa");
-        System.out.println(JSON.toJSONString(xujifa));
+
     }
 }

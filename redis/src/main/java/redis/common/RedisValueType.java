@@ -17,4 +17,17 @@ public interface RedisValueType<V> {
      * @return 解析得到的值
      */
     V fromBytes(byte[] bytes);
+
+
+    RedisValueType<byte[]> BYTES = new RedisValueType<byte[]>() {
+        @Override
+        public byte[] toBytes(byte[] value) {
+            return value;
+        }
+
+        @Override
+        public byte[] fromBytes(byte[] bytes) {
+            return bytes;
+        }
+    };
 }
