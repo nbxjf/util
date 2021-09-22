@@ -1,6 +1,9 @@
 package redis.common;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.codec.binary.Hex;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Response;
 import redis.clients.jedis.util.SafeEncoder;
 import redis.pool.RedisPool;
 import redis.clients.jedis.Pipeline;
@@ -15,8 +18,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-abstract class AbstractRedisSupport<K, V> {
+public abstract class AbstractRedisSupport<K, V> {
 
     private static final Pattern KEY_PATTERN = Pattern.compile("[a-zA-Z_0-9\\.\\-:]+(/[a-zA-Z_0-9\\.\\-:]+)*");
 
@@ -435,6 +439,52 @@ abstract class AbstractRedisSupport<K, V> {
                 ", must match pattern " + KEY_PATTERN.pattern());
         }
         return (keySpace + "/").getBytes(ENCODING);
+    }
+
+    protected List<Object> pipelineEval(Jedis jedis, String script, List<K> keys, List<String> args) {
+        // 使用 evalsha
+        List<Response<Object>> responseList = Lists.newArrayList();
+        Pipeline pipelined1 = jedis.pipelined();
+        for (K key : keys) {
+            Response<Object> response = pipelined1.evalsha(toBytes(scriptSha(script)), Collections.singletonList(finalKey(key)), finalEvalArgs(args, Collections.emptyList()));
+            responseList.add(response);
+        }
+        pipelined1.sync();
+
+        List<Object> result1 = new ArrayList<>(responseList.size());
+        for (Response<Object> response : responseList) {
+            try {
+                Object res = response.get();
+                result1.add(toString((byte[])res));
+            } catch (JedisDataException e) {
+                // 拦截第一个命令的 NOSCRIPT 异常
+                if (e.getMessage() != null && e.getMessage().contains("NOSCRIPT") && result1.isEmpty()) {
+                    break;
+                }
+                throw e;
+            }
+        }
+
+        // 判断是否遇到 NOSCRIPT 异常
+        if (result1.size() == responseList.size()) {
+            return result1;
+        }
+
+        // 使用 eval
+
+        List<Response<Object>> responses2 = new LinkedList<>();
+        Pipeline pipelined2 = jedis.pipelined();
+        for (K key : keys) {
+            Response<Object> response = pipelined2.eval(toBytes(script), Collections.singletonList(finalKey(key)), finalEvalArgs(args, Collections.emptyList()));
+            responses2.add(response);
+        }
+
+        pipelined2.sync();
+
+        return responses2.stream()
+            .map(Response::get)
+            .map(o -> toString((byte[])o))
+            .collect(Collectors.toList());
     }
 
 }
