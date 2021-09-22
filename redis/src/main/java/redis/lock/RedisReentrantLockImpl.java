@@ -11,6 +11,7 @@ import redis.pool.RedisPool;
 
 /**
  * Created by Jeff_xu on 2021/9/17.
+ * 可重入分布式锁
  *
  * @author Jeff_xu
  */
@@ -19,7 +20,7 @@ class RedisReentrantLockImpl<K> extends AbstractRedisLock<K> implements RedisLoc
 
     private final List<K> keys;
     private final AtomicLong lockedCounter;
-    public static final int ACQUIRE_RETRY_INTERVAL = 100;
+    private static final int ACQUIRE_RETRY_INTERVAL = 100;
 
     public RedisReentrantLockImpl(RedisPool redisPool,
                                   RedisKeyType<K> keyType,
