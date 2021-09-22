@@ -1,0 +1,35 @@
+<!-- <configuration debug="true"> 调试模式下，可输出logback的内部日志信息 -->
+<configuration debug="false">
+    <property resource="config.properties"/>
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 [%file:%line]日志所在文件及行数 %msg%n消息及换行-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%level] [%thread]:%logger{50} x:\(%X\) - [%method:%line] %replace(%throwable{full}){'\n', ' |'}  %replace(%msg){'\n', '|'} %nopex %n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <maxLogSize>200</maxLogSize>
+    </appender>
+
+    <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 [%file:%line]日志所在文件及行数 %msg%n消息及换行-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [ERROR_BEGIN] [%thread]:%logger{50} x:\(%X\) - [%method:%line] %replace(%throwable{full}){'\n', ' |'} %replace(%msg){'\n', '|'}  [ERROR_END] %nopex %n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <target>System.err</target>
+    </appender>
+
+
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STDERROR"/>
+    </root>
+    
+</configuration>
