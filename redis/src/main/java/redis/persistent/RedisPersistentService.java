@@ -15,6 +15,9 @@ import redis.pool.RedisPool;
 import utils.serializer.FastJsonSerializer;
 import utils.serializer.Serializer;
 
+/**
+ * 基于redis的持久化服务封装
+ */
 public class RedisPersistentService {
 
     private final RedisPool redisPool;
