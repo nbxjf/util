@@ -28,7 +28,7 @@ public interface RedisCacheLoader<K, V> {
      * @param <V> value类型
      */
     @FunctionalInterface
-    interface Simple<K, V> extends RedisCacheLoader<K, V> {
+    interface SingleLoader<K, V> extends RedisCacheLoader<K, V> {
         V loadOne(K key);
 
         /**

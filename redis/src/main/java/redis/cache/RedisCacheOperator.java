@@ -3,6 +3,8 @@ package redis.cache;
 import java.util.List;
 import java.util.Map;
 
+import redis.cache.RedisCacheLoader.SingleLoader;
+
 /**
  * Created by Jeff_xu on 2021/9/28.
  * Redis缓存操作器
@@ -30,6 +32,26 @@ public interface RedisCacheOperator<K, V> {
      * @return exists cache obj
      */
     Map<K, V> get(List<K> keys);
+
+    /**
+     * 单值缓存加载
+     * 如果缓存中不存在，则从方法回调中加载数据，并写入缓存
+     *
+     * @param key              key
+     * @param redisCacheLoader 回调函数
+     * @return cache obj
+     */
+    V load(K key, SingleLoader<K, V> redisCacheLoader);
+
+    /**
+     * 多值缓存加载
+     * 如果缓存中不存在，则从方法回调中加载数据，并写入缓存
+     *
+     * @param key              key
+     * @param redisCacheLoader 多值回调函数
+     * @return cache obj
+     */
+    Map<K, V> load(List<K> key, RedisCacheLoader<K, V> redisCacheLoader);
 
     /**
      * 刷新单个缓存

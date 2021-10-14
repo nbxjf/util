@@ -8,6 +8,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Response;
 import redis.clients.jedis.exceptions.JedisDataException;
+import redis.common.SafeRedisValueType.ExceptionalValue;
 import redis.pool.RedisPool;
 
 /**
@@ -23,11 +24,23 @@ import redis.pool.RedisPool;
  */
 public class RedisMap<K, V> extends AbstractRedisSupport<K, V> {
 
+    private final String mapName;
+
     public RedisMap(RedisPool redisPool,
                     String mapName,
                     RedisKeyType<K> keyType,
                     RedisValueType<V> valueType) {
         super(mapName, keyType, valueType, redisPool);
+        this.mapName = mapName;
+    }
+
+    /**
+     * 如需捕捉在反序列化时可能出现的问题，可以调用此函数，将反序列化结果和可能出现的异常进行包装
+     *
+     * @return 返回新的redis对象
+     */
+    public RedisMap<K, ExceptionalValue<V>> safeValueType() {
+        return new RedisMap<>(this.redisPool, mapName, this.keyType, new SafeRedisValueType<>(valueType));
     }
 
     /**
