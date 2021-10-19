@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Supplier;
 
 import lombok.extern.slf4j.Slf4j;
+import redis.cache.RedisCacheLoader.SingleLoader;
 import redis.common.RedisKeyType;
 import redis.lock.RedisLockService;
 import redis.pool.RedisPool;
@@ -26,11 +27,11 @@ import utils.serializer.Serializer;
 public class RedisCacheService {
 
     private final RedisPool redisPool;
-    private final RedisLockService redisLockService;
+    private final Serializer serializer;
 
     public RedisCacheService(RedisPool redisPool, Serializer serializer) {
         this.redisPool = redisPool;
-        this.redisLockService = new RedisLockService(redisPool);
+        this.serializer = serializer;
     }
 
     /**
@@ -52,7 +53,7 @@ public class RedisCacheService {
                           int physicalExpireSeconds,
                           boolean cacheNullable,
                           Supplier<V> cacheLoader) {
-        return null;
+        return cache(prefix, version, key, physicalExpireSeconds, physicalExpireSeconds, cacheNullable, cacheLoader);
     }
 
     /**
@@ -76,7 +77,7 @@ public class RedisCacheService {
                           int physicalExpireSeconds,
                           boolean cacheNullable,
                           Supplier<V> cacheLoader) {
-        return null;
+        return cache(prefix, version, key, logicalExpireSeconds, physicalExpireSeconds, cacheNullable, RedisKeyType.normal(), cacheLoader);
     }
 
     /**
@@ -102,7 +103,8 @@ public class RedisCacheService {
                           boolean cacheNullable,
                           RedisKeyType<K> keyType,
                           Supplier<V> cacheLoader) {
-        return null;
+        return new RedisCacheOperatorImpl<K, V>(redisPool, prefix, version, logicalExpireSeconds, physicalExpireSeconds, cacheNullable, keyType, serializer)
+            .load(key, k -> cacheLoader.get());
     }
 
     /**
@@ -126,7 +128,7 @@ public class RedisCacheService {
                                       int physicalExpireSeconds,
                                       boolean cacheNullable,
                                       RedisCacheLoader<K, V> valueLoader) {
-        return null;
+        return bulkCache(keyPrefix, version, keys, logicalExpireSeconds, physicalExpireSeconds, cacheNullable, RedisKeyType.normal(), valueLoader);
     }
 
     /**
@@ -152,7 +154,8 @@ public class RedisCacheService {
                                       boolean cacheNullable,
                                       RedisKeyType<K> keyType,
                                       RedisCacheLoader<K, V> valueLoader) {
-        return null;
+        return new RedisCacheOperatorImpl<K, V>(redisPool, keyPrefix, version, logicalExpireSeconds, physicalExpireSeconds, cacheNullable, keyType, serializer)
+            .load(keys, valueLoader);
     }
 
     /**
@@ -172,7 +175,7 @@ public class RedisCacheService {
                                                     int logicalExpireSeconds,
                                                     int physicalExpireSeconds,
                                                     boolean cacheNullable) {
-        return null;
+        return operator(keyPrefix, version, logicalExpireSeconds, physicalExpireSeconds, cacheNullable, RedisKeyType.normal());
     }
 
     /**
@@ -194,6 +197,6 @@ public class RedisCacheService {
                                                     int physicalExpireSeconds,
                                                     boolean cacheNullable,
                                                     RedisKeyType<K> redisKeyType) {
-        return null;
+        return new RedisCacheOperatorImpl<K, V>(redisPool, keyPrefix, version, logicalExpireSeconds, physicalExpireSeconds, cacheNullable, redisKeyType, serializer);
     }
 }

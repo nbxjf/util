@@ -102,4 +102,21 @@ public class RedisLockService {
     public <K> RedisLock buildLock(String scope, List<K> keys, RedisKeyType<K> keyType, long expiryTimeMillis) {
         return new RedisReentrantLockImpl<>(redisPool, keyType, keys, expiryTimeMillis, scope);
     }
+
+    /**
+     * 构造一个基于redis的批量分布式锁
+     * redis锁的本质是在给定的时间范围内最早设置给定key对应的节点的值
+     * 主要用于避免并发操作
+     * 用于同时申请一批redis锁，每个key可以单独成功
+     *
+     * @param scope            锁所属的业务范围
+     * @param keys             要申请的锁的名称列表，当且仅当所有的key都申请成功后此redis锁才获取成功
+     * @param keyType          key类型描述
+     * @param expiryTimeMillis 锁的存活期，单位毫秒，存活期需要长于500毫秒短于一个小时
+     * @param <K>              key类型
+     * @return 返回redis锁代理对象
+     */
+    public <K> RedisBatchLock<K> buildBatchLock(String scope, List<K> keys, RedisKeyType<K> keyType, long expiryTimeMillis) {
+        return new RedisBatchLockImpl<>(redisPool, keyType, keys, expiryTimeMillis, scope);
+    }
 }

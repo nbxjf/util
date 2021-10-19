@@ -44,6 +44,18 @@ public class RedisMap<K, V> extends AbstractRedisSupport<K, V> {
     }
 
     /**
+     * 判断key是否存在
+     *
+     * @param key key
+     * @return exist or not
+     */
+    public Boolean exist(K key) {
+        try (Jedis jedis = redisPool.getJedisClient()) {
+            return jedis.exists(finalKey(key));
+        }
+    }
+
+    /**
      * 获取表中指定的key对应的值
      *
      * @param key 要获取的key
