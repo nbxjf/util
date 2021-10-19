@@ -2,18 +2,10 @@ package redis.cache;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Supplier;
 
 import lombok.extern.slf4j.Slf4j;
-import redis.cache.RedisCacheLoader.SingleLoader;
 import redis.common.RedisKeyType;
-import redis.lock.RedisLockService;
 import redis.pool.RedisPool;
 import utils.serializer.Serializer;
 
