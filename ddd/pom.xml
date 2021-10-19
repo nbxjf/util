@@ -13,7 +13,7 @@
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
-        <spring_version>4.3.16.RELEASE</spring_version>
+        <spring_version>4.3.21.RELEASE</spring_version>
     </properties>
 
     <dependencies>
