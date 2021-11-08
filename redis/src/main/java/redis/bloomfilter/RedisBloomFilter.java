@@ -12,11 +12,10 @@ import org.redisson.config.Config;
  */
 public class RedisBloomFilter {
 
-    private static Config config;
+    private static final Config CONFIG = new Config();
 
     static {
-        Config config = new Config();
-        config.useSingleServer().setAddress("redis://127.0.0.1:6379");
+        CONFIG.useSingleServer().setAddress("redis://127.0.0.1:6379");
     }
 
     /**
@@ -28,7 +27,7 @@ public class RedisBloomFilter {
      * @return 布隆过滤器
      */
     public BloomFilter createBloomFilter(String name, double errorRate, long capacity) {
-        RedisBloomClient redisBloomClient = new RedisBloomClient(config);
+        RedisBloomClient redisBloomClient = new RedisBloomClient(CONFIG);
         BloomFilter rBloomFilter = redisBloomClient.getRBloomFilter(name);
         rBloomFilter.create(errorRate, capacity);
         return rBloomFilter;
