@@ -17,7 +17,7 @@ public class RedisPool implements AutoCloseable {
             jedisPoolConfig.setMaxTotal(redisConfig.getMaxTotal());
         }
         jedisPoolConfig.setMaxWaitMillis(Math.max(0, redisConfig.getMaxWaitMillis()));
-//        如果为true（默认为false），当应用向连接池申请连接时，连接池会判断这条连接是否是可用的
+        //如果为true（默认为false），当应用向连接池申请连接时，连接池会判断这条连接是否是可用的
         jedisPoolConfig.setTestOnBorrow(redisConfig.isTestOnBorrow());
         jedisPoolConfig.setTestOnCreate(redisConfig.isTestOnCreate());
         jedisPoolConfig.setTestOnReturn(redisConfig.isTestOnReturn());

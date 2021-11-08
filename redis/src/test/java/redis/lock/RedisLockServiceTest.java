@@ -41,17 +41,15 @@ public class RedisLockServiceTest extends BaseTest {
 
     @Test
     public void testLock_2() {
-        final RedisLock redisLock = redisLockService.buildLock("test", "ut-test", 300000);
-        try {
-            boolean lock1 = redisLock.tryAcquire();
-            log.info("lock1, {}", lock1);
-            System.out.println("lock1:" + lock1);
-            boolean lock2 = redisLock.tryAcquire(15, TimeUnit.SECONDS);
-            log.info("lock2, {}", lock2);
-            System.out.println("lock2:" + lock2);
-        } catch (Exception e) {
-            log.error("lock failed", e);
-            System.out.println(e);
+        RedisLock redisLock = redisLockService.buildLock("test", "ut-test", 300000);
+        if (redisLock.tryAcquire()) {
+            try {
+                // do something
+            }catch (Exception e){
+                // exception handle
+            }finally {
+                redisLock.release();
+            }
         }
     }
 }
