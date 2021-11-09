@@ -3,7 +3,7 @@
 1. 在项目中dao-module添加 依赖
     ```java
         <dependency>
-            <groupId>com.yit</groupId>
+            <groupId>com.jeff</groupId>
             <artifactId>mybatis-generator-plugin</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
