@@ -9,7 +9,7 @@ import com.google.common.primitives.Longs;
 import org.springframework.util.CollectionUtils;
 
 /**
- * @author guankaiqiang
+ * @author Jeff_xu
  * @date 2018/8/29
  */
 public class BatchExecutorUtil {

@@ -1,4 +1,4 @@
-package redis.lock;
+package lock;
 
 import java.util.concurrent.locks.ReentrantLock;
 
