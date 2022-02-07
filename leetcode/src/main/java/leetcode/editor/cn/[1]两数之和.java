@@ -16,20 +16,23 @@ package leetcode.editor.cn;
 // Related Topics 数组 哈希表 
 // 👍 9453 👎 0
 
+
+import java.util.Arrays;
+
 class TwoSum {
     public static void main(String[] args) {
         Solution solution = new TwoSum().new Solution();
-        int[] ints = solution.twoSum(new int[] {0,4,3,0}, 0);
-        System.out.println(ints);
+        int[] ints = solution.twoSum(new int[]{0, 4, 3, 0}, 0);
+        System.out.println(Arrays.toString(ints));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int[] twoSum(int[] nums, int target) {
-            for (int i = 0; i < nums.length ; i++) {
-                for (int j = i + 1; j < nums.length ; j++) {
+            for (int i = 0; i < nums.length; i++) {
+                for (int j = i + 1; j < nums.length; j++) {
                     if (nums[i] + nums[j] == target) {
-                        return new int[] {i, j};
+                        return new int[]{i, j};
                     }
                 }
             }
