@@ -19,6 +19,7 @@
         <module>kafka</module>
         <module>redis</module>
         <module>ddd</module>
+        <module>leetcode</module>
     </modules>
     <dependencies>
         <dependency>
